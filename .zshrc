@@ -89,12 +89,22 @@ source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $HOME/.oh-my-zsh/plugins/sudo/sudo.plugin.zsh
 
 # Functions
+
+# Create work files
 function mkt(){
 	mkdir {nmap,content,exploits,scripts}
 }
 
+# Create banners in terminal just for fun XD
+terminal_banner()
+{
+    echo
+    figlet -f 3d.flf -w 120 $* | lolcat
+    echo
+}
+
 # Extract nmap information
-function extractPorts(){
+function extract_ports(){
 	ports="$(cat $1 | grep -oP '\d{1,5}/open' | awk '{print $1}' FS='/' | xargs | tr ' ' ',')"
 	ip_address="$(cat $1 | grep -oP '\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}' | sort -u | head -n 1)"
 	echo -e "\n[*] Extracting information...\n" > extractPorts.tmp
@@ -119,7 +129,7 @@ function man() {
 }
 
 # fzf improvement
-function fzf-lovely(){
+function fzf_lovely(){
 
 	if [ "$1" = "h" ]; then
 		fzf -m --reverse --preview-window down:20 --preview '[[ $(file --mime {}) =~ binary ]] &&
@@ -141,10 +151,18 @@ function fzf-lovely(){
 	fi
 }
 
+# Remove files securely
 function rmk(){
-	scrub -p dod $1
-	shred -zun 10 -v $1
+	if [ -d $1 ]; then
+		# If argument is a directory, delete recursively
+		rm -r $1
+	else
+		# If the argument is a file, delete the file's data
+		scrub -p dod $1
+		shred -zun 10 -v $1
+	fi
 }
+
 
 # Finalize Powerlevel10k instant prompt. Should stay at the bottom of ~/.zshrc.
 (( ! ${+functions[p10k-instant-prompt-finalize]} )) || p10k-instant-prompt-finalize
