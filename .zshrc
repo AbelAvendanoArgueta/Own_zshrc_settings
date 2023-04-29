@@ -64,6 +64,9 @@ source $HOME/powerlevel10k/powerlevel10k.zsh-theme
 
 PATH=/root/.local/bin:/snap/bin:/usr/sandbox/:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games:/usr/share/games:/usr/local/sbin:/usr/sbin:/sbin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/lib/python3.10/site-packages:$PATH"
+
 
 # Manual aliases
 alias ll='lsd -lh --group-dirs=first'
